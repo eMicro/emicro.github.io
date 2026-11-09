@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="blog-hero">
+  <div class="eyebrow">{{ if eq .Language.Lang "fa" }}کتابخانه دانش eMicro{{ else }}THE EMICRO JOURNAL{{ end }}</div>
+  <h1>{{ if eq .Language.Lang "fa" }}یادداشت‌ها و <span>تجربه‌ها</span>{{ else }}Notes & <span>Experiments</span>{{ end }}</h1>
+  <p>{{ if eq .Language.Lang "fa" }}مقاله‌ها، راهنماها و تجربه‌های عملی در مهندسی نرم‌افزار، هوش مصنوعی، اینترنت اشیا و زیرساخت.{{ else }}Articles, practical guides, and field notes on software engineering, AI, IoT, and infrastructure.{{ end }}</p>
+  <div class="hero-meta"><span>{{ len .RegularPages }} {{ if eq .Language.Lang "fa" }}مقاله{{ else }}articles{{ end }}</span><span>·</span><span>Persian / English</span></div>
+</section>
+{{ $pages := .RegularPages.ByDate.Reverse }}
+{{ if $pages }}<div class="post-grid">
+  {{ range $pages }}<article class="post-card">
+    <div class="post-top"><span class="post-date">{{ .Date | time.Format "2006-01-02" }}</span>{{ with .Params.categories }}<span class="category">{{ index . 0 }}</span>{{ end }}</div>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p>{{ .Description | default .Summary | plainify | truncate 150 }}</p>
+    <div class="post-bottom"><div class="tags">{{ range first 3 .Params.tags }}<span>#{{ . }}</span>{{ end }}</div><a href="{{ .RelPermalink }}">{{ if eq $.Language.Lang "fa" }}ادامه مطلب ←{{ else }}Read article →{{ end }}</a></div>
+  </article>{{ end }}
+</div>{{ else }}<div class="empty"><h2>{{ if eq .Language.Lang "fa" }}هنوز مقاله‌ای منتشر نشده است{{ else }}No articles yet{{ end }}</h2><p>{{ if eq .Language.Lang "fa" }}اولین مقاله به‌زودی منتشر می‌شود.{{ else }}The first article is coming soon.{{ end }}</p></div>{{ end }}
+{{ end }}

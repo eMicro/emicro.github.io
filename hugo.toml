@@ -1,0 +1,48 @@
+baseURL = "https://emicro.ir/"
+languageCode = "fa-IR"
+defaultContentLanguage = "fa"
+defaultContentLanguageInSubdir = false
+title = "eMicro"
+
+enableRobotsTXT = true
+enableGitInfo = true
+
+[pagination]
+  pagerSize = 9
+
+[permalinks]
+  blog = "/blog/:slug/"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[languages]
+  [languages.fa]
+    languageName = "فارسی"
+    languageCode = "fa-IR"
+    languageDirection = "rtl"
+    weight = 1
+    title = "eMicro | یادداشت‌های فنی"
+  [languages.en]
+    languageName = "English"
+    languageCode = "en-US"
+    languageDirection = "ltr"
+    weight = 2
+    title = "eMicro | Engineering Notes"
+
+[params]
+  description = "یادداشت‌ها و تجربه‌های eMicro در نرم‌افزار، هوش مصنوعی، اینترنت اشیا و زیرساخت."
+  github = "https://github.com/eMicro"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+  [markup.highlight]
+    style = "github-dark"
+    lineNos = false

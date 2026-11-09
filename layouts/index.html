@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="eMicro؛ یادداشت‌ها، پروژه‌ها و تجربه‌ها در مهندسی نرم‌افزار، هوش مصنوعی، اینترنت اشیا و زیرساخت.">
+  <title>eMicro — مهندسی، نرم‌افزار و ایده‌ها</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080d18;
+      --surface: rgba(17, 26, 44, .78);
+      --surface-2: #111b2e;
+      --line: rgba(155, 180, 220, .13);
+      --text: #edf3ff;
+      --muted: #9aa9c2;
+      --blue: #5b9cff;
+      --cyan: #54e2dc;
+      --violet: #9b83ff;
+      --radius: 22px;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); background:
+        radial-gradient(ellipse at 80% 0%, rgba(45, 105, 190, .18), transparent 35rem),
+        radial-gradient(ellipse at 8% 42%, rgba(91, 70, 180, .12), transparent 28rem),
+        var(--bg);
+      font-family: "Vazirmatn", system-ui, sans-serif;
+      line-height: 1.8; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .top-glow { position: absolute; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan), var(--blue), transparent); opacity: .8; }
+    header {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px);
+      background: rgba(8, 13, 24, .78); border-bottom: 1px solid var(--line);
+    }
+    .nav { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: -.5px; direction: ltr; }
+    .brand-mark {
+      width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px;
+      color: #07111d; font-size: 17px; font-weight: 900;
+      background: linear-gradient(135deg, var(--cyan), var(--blue)); box-shadow: 0 8px 28px rgba(84, 226, 220, .2);
+    }
+    .brand-name { font-size: 22px; }
+    .brand-name span { color: var(--cyan); }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: var(--muted); font-size: 14px; }
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta, .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px; border-radius: 12px;
+      padding: 10px 17px; border: 1px solid rgba(91, 156, 255, .35);
+      background: rgba(91, 156, 255, .12); color: #dceaff; font-size: 14px; font-weight: 700;
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); background: rgba(91,156,255,.2); border-color: var(--blue); }
+    .menu-toggle { display: none; border: 1px solid var(--line); background: var(--surface-2); color: var(--text); border-radius: 10px; padding: 8px 11px; cursor: pointer; }
+    .hero { position: relative; padding: 108px 0 92px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 72px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: #b8c8e2; font-size: 12px; background: rgba(17, 27, 46, .65); }
+    .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 5px rgba(84,226,220,.1); }
+    h1 { margin: 23px 0 18px; font-size: clamp(38px, 5.4vw, 66px); line-height: 1.28; letter-spacing: -2px; font-weight: 900; }
+    .gradient-text { background: linear-gradient(100deg, #69e5df 5%, #6ba7ff 55%, #b09aff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-copy { max-width: 620px; color: var(--muted); font-size: 17px; line-height: 2.1; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .button.primary { color: #07111d; background: linear-gradient(110deg, var(--cyan), #83b7ff); border: 0; box-shadow: 0 12px 35px rgba(84, 180, 220, .18); }
+    .button.ghost { background: transparent; border-color: var(--line); color: #d9e4f7; }
+    .hero-meta { display: flex; gap: 25px; margin-top: 38px; color: #8292ad; font-size: 12px; }
+    .hero-meta strong { display: block; color: #dce8fa; font-size: 15px; }
+    .visual { position: relative; min-height: 420px; display: grid; place-items: center; }
+    .orb {
+      position: absolute; width: 310px; height: 310px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(84,226,220,.28), rgba(91,156,255,.14) 42%, rgba(155,131,255,.08) 65%, transparent 72%);
+      filter: blur(4px); border: 1px solid rgba(111, 178, 255, .2);
+      box-shadow: inset 0 0 55px rgba(91,156,255,.08), 0 0 90px rgba(48,130,220,.1);
+    }
+    .orbit { position: absolute; width: 390px; height: 160px; border: 1px solid rgba(107,167,255,.35); border-radius: 50%; transform: rotate(-28deg); }
+    .orbit.two { transform: rotate(58deg); width: 370px; height: 145px; border-color: rgba(84,226,220,.25); }
+    .core {
+      width: 164px; height: 164px; border-radius: 38px; display: grid; place-items: center; z-index: 2;
+      font-size: 42px; font-weight: 900; direction: ltr; color: #eafaff;
+      background: linear-gradient(145deg, rgba(30,54,84,.95), rgba(12,23,40,.96));
+      border: 1px solid rgba(133,190,255,.42); box-shadow: 0 25px 90px rgba(0,0,0,.38), inset 0 1px rgba(255,255,255,.12);
+      transform: rotate(-8deg);
+    }
+    .core span { color: var(--cyan); }
+    .float-card {
+      position: absolute; z-index: 3; padding: 12px 16px; border-radius: 14px;
+      border: 1px solid var(--line); background: rgba(14, 23, 39, .88); backdrop-filter: blur(12px);
+      color: #c7d5eb; font-size: 12px; box-shadow: 0 15px 45px rgba(0,0,0,.25);
+    }
+    .float-card b { color: var(--cyan); font-size: 13px; display: block; direction: ltr; }
+    .fc-one { top: 55px; right: 0; } .fc-two { bottom: 58px; left: 0; } .fc-three { bottom: 8px; right: 22%; }
+    section { padding: 78px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 32px; }
+    .section-kicker { color: var(--cyan); font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+    h2 { margin: 7px 0 0; font-size: clamp(26px, 3vw, 36px); line-height: 1.4; letter-spacing: -.8px; }
+    .section-desc { color: var(--muted); max-width: 520px; font-size: 14px; }
+    .about-panel {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 34px;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(17,27,46,.86), rgba(12,20,34,.65));
+    }
+    .about-panel p { color: var(--muted); margin: 0; }
+    .about-points { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .mini-point { padding: 16px; border: 1px solid var(--line); border-radius: 15px; background: rgba(8,13,24,.45); }
+    .mini-point strong { display: block; font-size: 14px; margin-bottom: 3px; }
+    .mini-point span { color: var(--muted); font-size: 12px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      padding: 24px; border-radius: 19px; border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(17,27,46,.82), rgba(12,19,32,.72));
+      transition: transform .25s, border-color .25s;
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(84,226,220,.35); }
+    .card-icon { width: 43px; height: 43px; display: grid; place-items: center; border-radius: 13px; color: var(--cyan); background: rgba(84,226,220,.09); border: 1px solid rgba(84,226,220,.13); font-size: 20px; }
+    .card h3 { font-size: 17px; margin: 17px 0 7px; }
+    .card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 2; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+    .tag { border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; color: #aebed7; font-size: 10px; direction: ltr; }
+    .project-card { min-height: 220px; display: flex; flex-direction: column; }
+    .project-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .status { font-size: 10px; color: var(--cyan); border: 1px solid rgba(84,226,220,.22); padding: 3px 9px; border-radius: 999px; }
+    .project-card .project-link { margin-top: auto; padding-top: 18px; color: #8dbaff; font-size: 12px; font-weight: 700; }
+    .blog-card { padding: 0; overflow: hidden; }
+    .blog-art { height: 115px; display: grid; place-items: center; font-size: 32px; color: rgba(220,240,255,.8); background: radial-gradient(circle at 70% 30%, rgba(84,226,220,.24), transparent 38%), linear-gradient(120deg, #152c49, #171a38); }
+    .blog-body { padding: 20px; }
+    .blog-body small { color: var(--cyan); font-size: 10px; }
+    .blog-body h3 { margin: 7px 0; font-size: 15px; }
+    .blog-body p { color: var(--muted); font-size: 12px; margin: 0; }
+    .contact-box {
+      padding: 42px; border: 1px solid rgba(91,156,255,.23); border-radius: 24px; text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(91,156,255,.14), transparent 60%), rgba(17,27,46,.65);
+    }
+    .contact-box p { color: var(--muted); max-width: 550px; margin: 12px auto 24px; font-size: 14px; }
+    footer { border-top: 1px solid var(--line); padding: 25px 0; color: #7f8da5; font-size: 12px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .socials { display: flex; gap: 18px; }
+    .socials a:hover { color: var(--cyan); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 850px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+      .hero { padding: 75px 0 55px; }
+      .visual { min-height: 350px; }
+      .about-panel { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { gap: 18px; }
+    }
+    @media (max-width: 620px) {
+      .container { width: min(100% - 28px, var(--max)); }
+      .nav { height: 68px; }
+      .menu-toggle { display: inline-flex; }
+      .nav-cta { display: none; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; inset-inline: 0; padding: 18px 22px 22px;
+        background: rgba(8,13,24,.98); border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 12px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 7px 0; }
+      h1 { letter-spacing: -1.3px; }
+      .hero-copy { font-size: 15px; }
+      .hero-meta { gap: 17px; }
+      .visual { transform: scale(.82); margin: -20px -30px; }
+      section { padding: 55px 0; }
+      .section-head { display: block; }
+      .section-desc { margin-top: 12px; }
+      .about-panel { padding: 22px; }
+      .about-points, .cards { grid-template-columns: 1fr; }
+      .contact-box { padding: 30px 20px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-glow"></div>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="eMicro home">
+        <span class="brand-mark">eM</span><span class="brand-name">e<span>Micro</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="منوی اصلی">
+        <a href="#about">درباره</a>
+        <a href="#domains">حوزه‌ها</a>
+        <a href="#projects">پروژه‌ها</a>
+        <a href="/blog/">بلاگ</a>
+        <a href="#journal">یادداشت‌ها</a>
+        <a href="#contact">ارتباط</a>
+      </nav>
+      <a class="nav-cta" href="https://github.com/eMicro" target="_blank" rel="noopener">مشاهده GitHub <span>↗</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="باز کردن منو" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> آزمایشگاه ایده‌ها و فناوری</div>
+          <h1>از ایده تا<br><span class="gradient-text">راه‌حل‌های هوشمند</span></h1>
+          <p class="hero-copy">
+            eMicro فضایی برای ساختن، یادگرفتن و به‌اشتراک‌گذاشتن تجربه‌هاست؛
+            در مرز مهندسی نرم‌افزار، هوش مصنوعی، اینترنت اشیا و زیرساخت‌های مدرن.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">کاوش پروژه‌ها <span>←</span></a>
+            <a class="button ghost" href="/blog/">مطالعه بلاگ</a>
+          </div>
+          <div class="hero-meta">
+            <div><strong>Build</strong>ساختن و تجربه‌کردن</div>
+            <div><strong>Explore</strong>یادگیری مداوم</div>
+            <div><strong>Share</strong>اشتراک دانش</div>
+          </div>
+        </div>
+        <div class="visual" aria-label="تصویر انتزاعی فناوری">
+          <div class="orb"></div><div class="orbit"></div><div class="orbit two"></div>
+          <div class="core">e<span>M</span></div>
+          <div class="float-card fc-one"><b>AI / ML</b>هوش مصنوعی</div>
+          <div class="float-card fc-two"><b>IoT + Edge</b>دنیای متصل</div>
+          <div class="float-card fc-three"><b>DevOps</b>زیرساخت و اتوماسیون</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container reveal">
+        <div class="section-head">
+          <div><div class="section-kicker">ABOUT EMICRO</div><h2>فناوری، با نگاه مهندسی</h2></div>
+          <p class="section-desc">جایی برای تبدیل کنجکاوی به محصول، و تجربه‌های فنی به دانشی قابل استفاده.</p>
+        </div>
+        <div class="about-panel">
+          <p>
+            در eMicro روی ایده‌هایی کار می‌کنیم که دنیای دیجیتال و فیزیکی را به هم نزدیک‌تر می‌کنند.
+            از طراحی سیستم‌های تعبیه‌شده و دستگاه‌های متصل تا توسعه نرم‌افزار، سرویس‌های ابری و ابزارهای مبتنی بر هوش مصنوعی.
+            این وب‌سایت دفترچه‌ای زنده از پروژه‌ها، آزمایش‌ها و آموخته‌هاست.
+          </p>
+          <div class="about-points">
+            <div class="mini-point"><strong>مهندسی کاربردی</strong><span>حل مسئله با نگاه عملی</span></div>
+            <div class="mini-point"><strong>یادگیری مستمر</strong><span>کاوش ابزارها و فناوری‌های تازه</span></div>
+            <div class="mini-point"><strong>ساخت محصول</strong><span>از نمونه اولیه تا اجرا</span></div>
+            <div class="mini-point"><strong>اشتراک دانش</strong><span>مستندسازی تجربه‌ها</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="domains">
+      <div class="container reveal">
+        <div class="section-head">
+          <div><div class="section-kicker">FOCUS AREAS</div><h2>حوزه‌های تمرکز</h2></div>
+          <p class="section-desc">چند قلمرو مکمل که در آن‌ها ایده‌ها را بررسی و به راه‌حل تبدیل می‌کنیم.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="card-icon">⌘</div><h3>نرم‌افزار و Backend</h3><p>طراحی API، معماری سرویس‌ها، سیستم‌های مقیاس‌پذیر و ابزارهای توسعه.</p><div class="tags"><span class="tag">Go</span><span class="tag">Rust</span><span class="tag">Python</span><span class="tag">PostgreSQL</span></div></article>
+          <article class="card"><div class="card-icon">◉</div><h3>هوش مصنوعی</h3><p>یادگیری ماشین، مدل‌های زبانی، پردازش داده و کاربردهای هوشمند.</p><div class="tags"><span class="tag">AI</span><span class="tag">LLM</span><span class="tag">MLOps</span></div></article>
+          <article class="card"><div class="card-icon">⌁</div><h3>اینترنت اشیا و Edge</h3><p>اتصال دستگاه‌ها، جمع‌آوری داده، پردازش لبه و سامانه‌های پایش.</p><div class="tags"><span class="tag">MQTT</span><span class="tag">ESP32</span><span class="tag">Embedded</span></div></article>
+          <article class="card"><div class="card-icon">⛭</div><h3>DevOps و زیرساخت</h3><p>اتوماسیون استقرار، کانتینرسازی، مانیتورینگ و زیرساخت قابل اتکا.</p><div class="tags"><span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">CI/CD</span></div></article>
+          <article class="card"><div class="card-icon">▦</div><h3>سیستم‌های تعبیه‌شده</h3><p>طراحی و توسعه راهکارهای سخت‌افزاری و نرم‌افزاری نزدیک به دستگاه.</p><div class="tags"><span class="tag">C/C++</span><span class="tag">STM32</span><span class="tag">Firmware</span></div></article>
+          <article class="card"><div class="card-icon">✳</div><h3>یادگیری و پژوهش</h3><p>مطالعه عمیق، آزمایش ایده‌ها و مستندسازی مسیر یادگیری.</p><div class="tags"><span class="tag">Research</span><span class="tag">Engineering</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container reveal">
+        <div class="section-head">
+          <div><div class="section-kicker">SELECTED WORK</div><h2>پروژه‌ها و تجربه‌ها</h2></div>
+          <p class="section-desc">نمونه‌هایی از مسیر ساخت و آزمایش. این بخش را می‌توانی با پروژه‌های واقعی خودت تکمیل کنی.</p>
+        </div>
+        <div class="cards">
+          <article class="card project-card">
+            <div class="project-top"><div class="card-icon">⌁</div><span class="status">در حال توسعه</span></div>
+            <h3>پلتفرم IoT</h3><p>پایش و مدیریت دستگاه‌های متصل با معماری Cloud و Gateway محلی.</p>
+            <a class="project-link" href="https://github.com/eMicro" target="_blank" rel="noopener">مشاهده در GitHub ↗</a>
+          </article>
+          <article class="card project-card">
+            <div class="project-top"><div class="card-icon">⛭</div><span class="status">آزمایشگاه</span></div>
+            <h3>ابزارها و اتوماسیون</h3><p>اسکریپت‌ها، زیرساخت‌ها و گردش‌کارهایی برای ساده‌تر کردن کارهای فنی.</p>
+            <a class="project-link" href="https://github.com/eMicro" target="_blank" rel="noopener">مشاهده مخزن‌ها ↗</a>
+          </article>
+          <article class="card project-card">
+            <div class="project-top"><div class="card-icon">✳</div><span class="status">در حال تکمیل</span></div>
+            <h3>یادداشت‌های فنی</h3><p>مستندات، آموزش‌ها و آموخته‌هایی از کار با فناوری‌های مختلف.</p>
+            <a class="project-link" href="#journal">رفتن به یادداشت‌ها ←</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="journal">
+      <div class="container reveal">
+        <div class="section-head">
+          <div><div class="section-kicker">FIELD NOTES</div><h2>از دفترچه یادداشت</h2></div>
+          <p class="section-desc">مقاله‌ها، راهنماها و تجربه‌های فنی را در بلاگ eMicro دنبال کن.</p>
+        </div>
+        <div class="cards">
+          <article class="card blog-card"><div class="blog-art">{" }"}</div><div class="blog-body"><small>SOFTWARE ENGINEERING</small><h3>یادداشت‌هایی درباره معماری نرم‌افزار</h3><p>الگوها، تصمیم‌ها و تجربه‌های طراحی سیستم.</p></div></article>
+          <article class="card blog-card"><div class="blog-art">◉</div><div class="blog-body"><small>AI & MACHINE LEARNING</small><h3>آزمایش با مدل‌های هوشمند</h3><p>از ایده‌های اولیه تا پیاده‌سازی و ارزیابی.</p></div></article>
+          <article class="card blog-card"><div class="blog-art">⌁</div><div class="blog-body"><small>IoT & EMBEDDED</small><h3>ساخت سامانه‌های متصل</h3><p>تجربه‌های عملی در دنیای دستگاه‌ها و داده‌ها.</p></div></article>
+        </div>
+        <div style="text-align:center;margin-top:28px"><a class="button ghost" href="/blog/">مشاهده همه مقاله‌ها ←</a></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container reveal">
+        <div class="contact-box">
+          <div class="section-kicker">LET'S CONNECT</div>
+          <h2>ایده‌ای برای ساختن داری؟</h2>
+          <p>برای همکاری، تبادل تجربه یا دنبال کردن پروژه‌ها، از طریق GitHub با eMicro در ارتباط باش.</p>
+          <a class="button primary" href="https://github.com/eMicro" target="_blank" rel="noopener">ارتباط در GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> <b style="color:#dce8fa;direction:ltr;display:inline-block">eMicro</b> — ساخته‌شده با کنجکاوی و کد.</div>
+      <div class="socials"><a href="https://github.com/eMicro" target="_blank" rel="noopener">GitHub</a><a href="#home">بازگشت به بالا ↑</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.textContent = "☰";
+    }));
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

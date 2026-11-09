@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="{{ .Language.Lang }}" dir="{{ if eq .Language.Lang "fa" }}rtl{{ else }}ltr{{ end }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="{{ .Description | default site.Params.description }}">
+  <title>{{ if .Title }}{{ .Title }} · {{ end }}{{ site.Title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ "css/blog.css" | relURL }}">
+  {{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">{{ end }}
+</head>
+<body>
+  <div class="top-line"></div>
+  <header class="site-header"><div class="wrap nav">
+    <a class="brand" href="{{ "/" | relLangURL }}"><span class="brand-mark">eM</span><span>e<span class="cyan">Micro</span></span></a>
+    <nav class="nav-links"><a href="{{ "/" | relLangURL }}">{{ if eq .Language.Lang "fa" }}خانه{{ else }}Home{{ end }}</a><a class="active" href="{{ "/blog/" | relLangURL }}">{{ if eq .Language.Lang "fa" }}بلاگ{{ else }}Blog{{ end }}</a><a href="{{ site.Params.github }}" target="_blank" rel="noopener">GitHub ↗</a></nav>
+    <div class="language"><a href="{{ if eq .Language.Lang "fa" }}{{ with .Translations }}{{ (index . 0).RelPermalink }}{{ else }}{{ "/en/blog/" | relURL }}{{ end }}{{ else }}{{ with .Translations }}{{ (index . 0).RelPermalink }}{{ else }}{{ "/blog/" | relURL }}{{ end }}{{ end }}">{{ if eq .Language.Lang "fa" }}EN{{ else }}فا{{ end }}</a></div>
+  </div></header>
+  <main class="wrap main">{{ block "main" . }}{{ end }}</main>
+  <footer class="footer"><div class="wrap footer-inner"><span>© {{ now.Year }} eMicro</span><span>{{ if eq .Language.Lang "fa" }}ساخته‌شده با Hugo و Markdown{{ else }}Built with Hugo & Markdown{{ end }}</span><a href="{{ site.Params.github }}" target="_blank" rel="noopener">GitHub ↗</a></div></footer>
+</body>
+</html>

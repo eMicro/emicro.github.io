@@ -1,0 +1,14 @@
+{{ define "main" }}
+<article class="article">
+  <a class="back-link" href="{{ "/blog/" | relLangURL }}">{{ if eq .Language.Lang "fa" }}← بازگشت به بلاگ{{ else }}← Back to blog{{ end }}</a>
+  <header class="article-header">
+    {{ with .Params.categories }}<div class="eyebrow">{{ delimit . " · " }}</div>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="article-description">{{ . }}</p>{{ end }}
+    <div class="article-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006-01-02" }}</time><span>·</span><span>{{ .ReadingTime }} {{ if eq .Language.Lang "fa" }}دقیقه مطالعه{{ else }}min read{{ end }}</span></div>
+  </header>
+  <div class="prose">{{ .Content }}</div>
+  {{ with .Params.tags }}<div class="article-tags">{{ range . }}<span>#{{ . }}</span>{{ end }}</div>{{ end }}
+  {{ with .Translations }}<aside class="translation"><strong>{{ if eq $.Language.Lang "fa" }}این مقاله به زبان دیگر:{{ else }}Also available in:{{ end }}</strong>{{ range . }}<a href="{{ .RelPermalink }}">{{ .Language.LanguageName }} — {{ .Title }}</a>{{ end }}</aside>{{ end }}
+</article>
+{{ end }}
